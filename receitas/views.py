@@ -6,7 +6,7 @@ def index(request):
     return render(request, 'receitas/home.html')
 
 def sobre(request):
-    return render(request, 'temp/temp.html')
+    return render(request, 'receitas/home.html')
 
 def contato(request):
     return HttpResponse('Contato')
