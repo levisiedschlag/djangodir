@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import get_list_or_404, render
 from utils.recipes import factory
 from receitas import models
+from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
@@ -9,9 +10,14 @@ def index(request):
     return render(request, 'receitas/pages/home.html', { 'recipes' : recipes })
 
 def category(request, id):
-    recipes = models.Recipe.objects.filter(category__id=id, is_published=True).order_by('-id')
-    
-    return render(request, 'receitas/pages/recipe-category.html', { 'recipes' : recipes })
+    recipes = get_list_or_404(
+        models.Recipe.objects.filter(category__id=id, is_published=True).order_by('-id')
+        )
+    return render(request, 'receitas/pages/recipe-category.html', { 
+            'recipes' : recipes,
+            'title': f'{recipes[0].category.name}'
+            })
+
 
 def recipe(request, id):
     recipe = models.Recipe.objects.filter(id=id)
