@@ -15,7 +15,7 @@ class Recipe(models.Model):
 
     title = models.CharField(max_length=65)
     description = models.CharField(max_length=200)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     preparation_time = models.IntegerField()
     preparation_unit = models.CharField(max_length=15)
     preparation_steps = models.TextField()
@@ -23,7 +23,7 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
-    cover = models.ImageField(upload_to='receitas/covers/%Y/%m/%d/')
+    cover = models.ImageField(upload_to='recipes/covers/%Y/%m/%d/')
     # ON DELE SET NULL > BLANK=TRUE DEFAULT=NONE NULL=TRUE
     category = models.ForeignKey(
         Category,
