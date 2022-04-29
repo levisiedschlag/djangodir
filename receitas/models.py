@@ -1,16 +1,15 @@
-from distutils.command.upload import upload
-from unicodedata import category
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 # Create your models here.
 
 
-
 class Category(models.Model):
     name = models.CharField(max_length=65)
+
     def __str__(self) -> str:
         return self.name
+
 
 class Recipe(models.Model):
 
@@ -26,7 +25,15 @@ class Recipe(models.Model):
     is_published = models.BooleanField(default=False)
     cover = models.ImageField(upload_to='receitas/covers/%Y/%m/%d/')
     # ON DELE SET NULL > BLANK=TRUE DEFAULT=NONE NULL=TRUE
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, default=None)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        default=None
+    )
+    author = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+
     def __str__(self) -> str:
         return self.title
